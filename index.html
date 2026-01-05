@@ -1,255 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Customer Accounting Dashboard</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      margin: 20px;
-      background: #eef2f7;
-      color: #2c3e50;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .form-container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      max-width: 700px;
-      margin: auto;
-    }
-    .row {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 10px;
-    }
-    .row > div {
-      flex: 1;
-    }
-    label {
-      font-weight: bold;
-      font-size: 0.9em;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    button {
-      padding: 10px 15px;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background: #2980b9;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 25px;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background: #3498db;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-    tr:hover {
-      background: #f1f7ff;
-    }
-    #grandTotal {
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: right;
-      font-size: 1.1em;
-    }
-    #searchBox {
-      margin: 20px auto;
-      display: block;
-      padding: 8px;
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Purchase Entry | Inventory System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="insertProduct.css" />
 </head>
 <body>
 
-  <h2>Customer Accounting Dashboard</h2>
+<div class="app fade-in">
 
-  <div class="form-container">
-    <form id="customerForm">
-      <div class="row">
+  <!-- HEADER -->
+  <header class="topbar">
+    <h1>Purchase Entry</h1>
+    <span>Inventory • Accounting • Logistics</span>
+  </header>
+
+  <form class="card" id="purchaseForm">
+
+    <!-- TRANSACTION INFO -->
+    <section>
+      <h2>Transaction Information</h2>
+      <div class="grid">
         <div>
-          <label>Serial No.</label>
-          <input type="text" id="serial" required>
+          <label>Purchase Date</label>
+          <input type="date" name="purchaseDate" required />
         </div>
         <div>
-          <label>Name</label>
-          <input type="text" id="name" required>
+          <label>Status</label>
+          <select name="status">
+            <option>Draft</option>
+            <option>Verified</option>
+          </select>
         </div>
       </div>
-      <div class="row">
+    </section>
+
+    <!-- PRODUCT DETAILS -->
+    <section>
+      <h2>Product Details</h2>
+      <div class="grid">
         <div>
-          <label>Address</label>
-          <input type="text" id="address" required>
+          <label>Category</label>
+          <select id="category">
+            <option value="">Select</option>
+            <option value="cement">Cement</option>
+            <option value="sand">Sand</option>
+            <option value="steel">Steel</option>
+            <option value="stone">Sandstone</option>
+          </select>
         </div>
+
         <div>
-          <label>Contact</label>
-          <input type="text" id="contact" required>
+          <label>Product Name / Grade</label>
+          <input type="text" name="productName" />
         </div>
-      </div>
-      <div class="row">
-        <div>
-          <label>Product</label>
-          <input type="text" id="product" required>
-        </div>
-        <div>
-          <label>Price</label>
-          <input type="number" id="price" required>
-        </div>
+
         <div>
           <label>Quantity</label>
-          <input type="number" id="quantity" required>
+          <input type="number" id="quantity" />
         </div>
+
         <div>
-          <label>Total</label>
-          <input type="number" id="total" readonly>
+          <label>Unit</label>
+          <select id="unit"></select>
+        </div>
+
+        <!-- Sandstone extra -->
+        <div id="stoneCount" class="hidden">
+          <label>Stone Count</label>
+          <input type="number" />
+        </div>
+
+        <div id="stoneWeight" class="hidden">
+          <label>Total Weight</label>
+          <select>
+            <option>Quintal</option>
+            <option>Ton</option>
+          </select>
         </div>
       </div>
-      <button type="submit">Insert Customer</button>
-    </form>
-  </div>
+    </section>
 
-  <input type="text" id="searchBox" placeholder="Search by name, product, or serial...">
+    <!-- PRICING -->
+    <section>
+      <h2>Pricing & Cost</h2>
+      <div class="grid">
+        <div>
+          <label>Rate (per unit)</label>
+          <input type="number" id="rate" />
+        </div>
 
-  <table id="customerTable">
-    <thead>
-      <tr>
-        <th>Serial</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Contact</th>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+        <div>
+          <label>Material Cost</label>
+          <input type="number" id="materialCost" readonly />
+        </div>
 
-  <div id="grandTotal">Grand Total: 0</div>
+        <div>
+          <label>Transport Cost</label>
+          <input type="number" id="transportCost" />
+        </div>
 
-  <script>
-    const form = document.getElementById('customerForm');
-    const tableBody = document.querySelector('#customerTable tbody');
-    const grandTotalEl = document.getElementById('grandTotal');
-    const searchBox = document.getElementById('searchBox');
+        <div>
+          <label>Total Cost</label>
+          <input type="number" id="totalCost" readonly />
+        </div>
+      </div>
+    </section>
 
-    let grandTotal = 0;
+    <!-- SUPPLIER -->
+    <section>
+      <h2>Supplier Information</h2>
+      <div class="grid">
+        <div>
+          <label>Supplier Name</label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>Supplier Location</label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>Invoice / Challan No</label>
+          <input type="text" />
+        </div>
+      </div>
+    </section>
 
-    form.price.addEventListener('input', calcTotal);
-    form.quantity.addEventListener('input', calcTotal);
+    <!-- TRANSPORT -->
+    <section>
+      <h2>Transport & Logistics</h2>
+      <div class="grid">
+        <div>
+          <label>Vehicle Number</label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>Vehicle Type</label>
+          <select>
+            <option>Truck</option>
+            <option>Mini Truck</option>
+            <option>Tractor</option>
+          </select>
+        </div>
+        <div>
+          <label>Driver Name</label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>Source Location</label>
+          <input type="text" />
+        </div>
+      </div>
+    </section>
 
-    function calcTotal() {
-      const price = parseFloat(form.price.value) || 0;
-      const qty = parseFloat(form.quantity.value) || 0;
-      form.total.value = price * qty;
-    }
+    <!-- REMARKS -->
+    <section>
+      <h2>Remarks</h2>
+      <textarea placeholder="Any notes, quality issue, shortage, etc."></textarea>
+    </section>
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button type="reset" class="btn ghost">Reset</button>
+      <button type="submit" class="btn primary">Save Purchase</button>
+    </div>
 
-      const customer = {
-        serial: form.serial.value,
-        name: form.name.value,
-        address: form.address.value,
-        contact: form.contact.value,
-        product: form.product.value,
-        price: form.price.value,
-        quantity: form.quantity.value,
-        total: form.total.value
-      };
+  </form>
 
-      const row = document.createElement('tr');
-      Object.values(customer).forEach(val => {
-        const cell = document.createElement('td');
-        cell.textContent = val;
-        row.appendChild(cell);
-      });
+  <footer>© 2025 Inventory Accounting System</footer>
+</div>
 
-      // Actions cell
-      const actions = document.createElement('td');
-      actions.innerHTML = `
-        <button onclick="editRow(this)">Edit</button>
-        <button onclick="deleteRow(this)">Delete</button>
-      `;
-      row.appendChild(actions);
-
-      tableBody.appendChild(row);
-
-      grandTotal += parseFloat(customer.total);
-      grandTotalEl.textContent = "Grand Total: " + grandTotal;
-
-      form.reset();
-      form.total.value = '';
-    });
-
-    function editRow(btn) {
-      const row = btn.parentElement.parentElement;
-      const cells = row.querySelectorAll('td');
-      form.serial.value = cells[0].textContent;
-      form.name.value = cells[1].textContent;
-      form.address.value = cells[2].textContent;
-      form.contact.value = cells[3].textContent;
-      form.product.value = cells[4].textContent;
-      form.price.value = cells[5].textContent;
-      form.quantity.value = cells[6].textContent;
-      form.total.value = cells[7].textContent;
-
-      grandTotal -= parseFloat(cells[7].textContent);
-      grandTotalEl.textContent = "Grand Total: " + grandTotal;
-
-      row.remove();
-    }
-
-    function deleteRow(btn) {
-      const row = btn.parentElement.parentElement;
-      const total = parseFloat(row.cells[7].textContent);
-      grandTotal -= total;
-      grandTotalEl.textContent = "Grand Total: " + grandTotal;
-      row.remove();
-    }
-
-    searchBox.addEventListener('input', function() {
-      const term = this.value.toLowerCase();
-      Array.from(tableBody.rows).forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(term) ? '' : 'none';
-      });
-    });
-  </script>
-
+<script src="insertProduct.js"></script>
 </body>
 </html>
