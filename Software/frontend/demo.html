@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Business Accounting Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="css/demo.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Business Accounting Dashboard</div>
+          <div class="subtitle">Live sales, inventory, and revenue insights</div>
+        </div>
+      </div>
+      <div>
+        <a href="file:///C:/Users/anup%20kumar/OneDrive/Desktop/folder/DemoProject/Software/frontend/insertCustomers.html"><button
+            class="btn" id="insertBtn" title="Insert filters">Insert Customers</button></a>
+
+        <a href="file:///C:/Users/anup%20kumar/OneDrive/Desktop/folder/DemoProject/Software/frontend/insertProducts.html"><button
+            class="btn" id="insertBtn" title="Insert filters">Insert Products</button></a>
+      </div>
+    </header>
+
+    <!-- Summary -->
+    <section class="panel">
+      <div class="summary">
+        <div class="card">
+          <div class="label">Total revenue</div>
+          <div class="value" id="sumRevenue">₹4,80,000</div>
+          <div class="trend">+12.4% MoM</div>
+        </div>
+        <div class="card">
+          <div class="label">Total products</div>
+          <div class="value" id="sumProducts">18</div>
+        </div>
+        <div class="card">
+          <div class="label">Stock available</div>
+          <div class="value" id="sumStock">1,240 units</div>
+        </div>
+        <div class="card">
+          <div class="label">Top performer</div>
+          <div class="value" id="topProduct">River Sand</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="control">
+          <span style="color:#cbd5e1">Search</span>
+          <input id="qProduct" type="text" placeholder="Product name…" />
+        </div>
+        <div class="control">
+          <span style="color:#cbd5e1">Min revenue</span>
+          <input id="minRevenue" type="number" min="0" placeholder="e.g., 100000" />
+        </div>
+        <div class="control">
+          <span style="color:#cbd5e1">Min inventory</span>
+          <input id="minInventory" type="number" min="0" placeholder="e.g., 200" />
+        </div>
+        <div class="control">
+          <span style="color:#cbd5e1">Sort by</span>
+          <select id="sortBy">
+            <option value="">None</option>
+            <option value="product">Product</option>
+            <option value="inventory">Inventory</option>
+            <option value="units_sold">Units sold</option>
+            <option value="revenue">Revenue</option>
+          </select>
+        </div>
+        <div class="control">
+          <span style="color:#cbd5e1">Order</span>
+          <select id="sortDir">
+            <option value="desc">Desc</option>
+            <option value="asc">Asc</option>
+          </select>
+        </div>
+        <button class="btn" id="applyBtn" title="Apply filters">Apply</button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table aria-label="Product sales and inventory">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Inventory</th>
+              <th>Units sold</th>
+              <th>Revenue</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+
+        <div class="footer" id="footerNote">
+          Showing <span id="rowCount">0</span> products • Filtered totals: revenue <span id="filteredRevenue">₹0</span>,
+          units <span id="filteredUnits">0</span>, inventory <span id="filteredInventory">0</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/demo.js"></script>
+</body>
+
+</html>
